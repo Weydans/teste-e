@@ -1,0 +1,17 @@
+{
+    "name": "weydans/evolke",
+    "description": "Evolke test",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Weydans Barros",
+            "email": "weydans@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Lib\\": "lib/"
+        }
+    }
+}
