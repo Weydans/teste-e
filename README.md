@@ -12,7 +12,19 @@ Sistema de teste para a Evolke
 
 ### Observações
 
+- Foi bem legal desenvolver o projeto. Algumas bibliotecas foram utilizadas no processo como Doctrine, Twig e Guzzle.
+- A pasta lib é um "micro-framework" que permite a criação de Rotas, Abstração de Controladores e Trais muito úteis no desenvolvimento.
+- O sistema está dockerizado e é esperado o mesmo comportamento em outras máquinas.
+- A aplicação conta com variáceis de ambiente (.env) pra facilitar o bootstrap do projeto e esconder secrets.
+- Todas as classes presentes na pasta src estão em PHP nativo requisitado.
+- SGBD MySQL como requisitado.
+- Biblioteca de front end Bootstrap (via CDN) como requisitado.
+- Foi utilizado o composer para gerenciar as dependências do projeto.
+- O projeto conta com migrações para criação da base e povoar tabelas com dados necessários.
+- Foi utilizado um arquivo Makefile para facilitar a instalação, Execução e Exclusão do projeto.
+- Não foi necessário o uso de Javascript dada a simplicidade do projeto, contudo se necessário podem me aplicar algum teste ou analisar alguns de meus projetos no meu Github.
 
+  Boa avalição, espero ter faito um bom trabalho ;)
 
 ## Dependências
 
@@ -40,7 +52,7 @@ cd teste-evolke
 
 - Rode o comando de instalação dos containers
 ```bash
-sudo make install
+make install
 ```
 
 
@@ -50,7 +62,7 @@ sudo make install
 
 - Suba a plicação com o comando abaixo
 ```bash
-sudo make
+make
 ```
 
 
@@ -65,7 +77,7 @@ O acesso pode ser realizado pela url [aqui](http://localhost:8000/) nesse link.
 
 Interrompe a execução dos containers
 ```bash
-sudo make down
+make down
 ```
 
 
