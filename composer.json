@@ -22,6 +22,8 @@
 		"symfony/cache": "^5.4"
     },
     "require": {
-        "doctrine/migrations": "^3.6"
+        "doctrine/migrations": "^3.6",
+        "twig/twig": "^3.0",
+        "guzzlehttp/guzzle": "^7.0"
     }
 }

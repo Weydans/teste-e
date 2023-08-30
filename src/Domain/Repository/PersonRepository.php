@@ -4,7 +4,7 @@ namespace App\Domain\Repository;
 
 use App\Domain\Model\Person;
 
-class PersonDoctrineRepository extends DoctrineRepository
+class PersonRepository extends DoctrineRepository
 {
 	protected $entityClass = Person::class;
     

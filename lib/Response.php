@@ -3,7 +3,6 @@
 namespace Lib;
 
 use \stdclass;
-use \Exception;
 
 class Response
 {

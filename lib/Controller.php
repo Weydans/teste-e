@@ -3,7 +3,6 @@
 namespace Lib;
 
 use \stdclass;
-use \Exception;
 use Lib\Request;
 
 abstract class Controller
@@ -48,6 +47,17 @@ abstract class Controller
 		$this->response->httpCode 	= $httpCode;
 		$this->response->message 	= $message;
 		$this->response->data	 	= $this->data;
+	}
+
+	public function responseView( string $view, array $data = [] ) : void 
+	{
+		$templatesPath = __DIR__ . '/../view';
+
+		$twig = new \Twig\Environment(
+			new \Twig\Loader\FilesystemLoader( $templatesPath )
+		);
+
+		echo $twig->render( $view, $data );
 	}
 }
 

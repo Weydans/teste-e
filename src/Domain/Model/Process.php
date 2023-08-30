@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[Entity]
 class Process implements SerializeableInterface
@@ -34,10 +35,10 @@ class Process implements SerializeableInterface
 	#[Column]
 	private int $id;
 	
-	#[ManyToOne(targetEntity: Person::class)]
+	#[ManyToOne(targetEntity: Person::class, inversedBy: 'processes', cascade: ['persist', 'remove'])]
 	private Person $person;
 	
-	#[ManyToOne(targetEntity: Unit::class)]
+	#[ManyToOne(targetEntity: Unit::class, inversedBy: 'processes', cascade: ['persist', 'remove'])]
 	private Unit $unit;
 	
 	#[Column]
@@ -48,6 +49,9 @@ class Process implements SerializeableInterface
 	
 	#[Column]
 	private int $line_position;
+
+	#[Column]
+	private bool $integrated;
 	
 	#[Column]
 	private DateTime $created_at;
@@ -62,6 +66,7 @@ class Process implements SerializeableInterface
 		'type', 
 		'status', 
 		'line_position', 
+		'integrated', 
 		'created_at', 
 		'updated_at' 
 	];
@@ -69,23 +74,45 @@ class Process implements SerializeableInterface
 	use Getters, Setters, Issets, Serializeable;
 	
 	public function __construct( 
-		string $name,
 		Person $person,
 		Unit $unit,
 		int $type,
 		int $status,
-		int $line_position = null,
-		DateTime $created_at = null,
-		DateTime $updated_at = null
+		int $line_position,
+		bool $integrated,
+		DateTime $created_at,
+		DateTime $updated_at
 	)
 	{
-		$this->name          = $name;
 		$this->person        = $person;
 		$this->unit          = $unit;
 		$this->type          = $type;
 		$this->status        = $status;
 		$this->line_position = $line_position;
+		$this->integrated    = $integrated;
 		$this->created_at    = $created_at;
 		$this->updated_at    = $updated_at;	
+	}
+
+	public static function ptbrStatusList() : array
+	{
+		return [
+			'Em Andamento' => Process::STATUS_IN_PROGRESS,
+			'Processado'   => Process::STATUS_PROCESSED,
+			'Cancelado'    => Process::STATUS_CANCELED,
+		];
+	}
+
+	public static function ptbrActionList() : array 
+	{
+		return [
+			'Importação de unidades'   => Process::TYPE_IMPORT_UNITIES,
+			'Importação de cargos'     => Process::TYPE_IMPORT_POSITIONS,
+			'Importação de setores'    => Process::TYPE_IMPORT_SECTORS,
+			'Importação de pessoas'    => Process::TYPE_IMPORT_PEOLPLE,
+			'Importação de cursos'     => Process::TYPE_IMPORT_COURSES,
+			'Importação de matrículas' => Process::TYPE_IMPORT_REGISTRATIONS,
+			'Certificados em lote'	   => Process::TYPE_IMPORT_BATCHES,
+		];
 	}
 }

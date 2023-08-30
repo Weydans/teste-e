@@ -69,7 +69,7 @@ abstract class DoctrineRepository implements RepositoryInterface
 	 */
 	public function find( int $id ) : ?object 
 	{
-		$entity = $this->manager->find( $this->entityClass, $id );
+		$entity = $this->repository->find( $id );
 
 		if ( is_null( $entity ) ) {
 			throw new RegisterNotFoundException( "Register with id {$id} not found" );
