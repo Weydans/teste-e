@@ -14,8 +14,8 @@ Sistema de teste para a Evolke
 
 - Foi bem legal desenvolver o projeto. Algumas bibliotecas foram utilizadas no processo como Doctrine, Twig e Guzzle.
 - A pasta lib é um "micro-framework" que permite a criação de Rotas, Abstração de Controladores e Trais muito úteis no desenvolvimento.
-- O sistema está dockerizado e é esperado o mesmo comportamento em outras máquinas.
-- A aplicação conta com variáceis de ambiente (.env) pra facilitar o bootstrap do projeto e esconder secrets.
+- O sistema está dockerizado sendo esperado o mesmo comportamento em outras máquinas.
+- A aplicação conta com variáveis de ambiente (.env) para facilitar o bootstrap do projeto e esconder secrets.
 - Todas as classes presentes na pasta src estão em PHP nativo requisitado.
 - SGBD MySQL como requisitado.
 - Biblioteca de front end Bootstrap (via CDN) como requisitado.
@@ -24,7 +24,7 @@ Sistema de teste para a Evolke
 - Foi utilizado um arquivo Makefile para facilitar a instalação, Execução e Exclusão do projeto.
 - Não foi necessário o uso de Javascript dada a simplicidade do projeto, contudo se necessário podem me aplicar algum teste ou analisar alguns de meus projetos no meu Github.
 
-  Boa avalição, espero ter faito um bom trabalho ;)
+  Boa avaliação, espero ter feito um bom trabalho ;)
 
 ## Dependências
 
