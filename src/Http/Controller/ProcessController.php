@@ -7,13 +7,13 @@ use Lib\Controller;
 use App\Domain\Service\ProcessAllService;
 use App\Domain\Exception\RegisterNotFoundException;
 use App\Domain\Model\Process;
-use App\Domain\Model\VolkLMSConnector;
 use App\Domain\Repository\PersonRepository;
 use App\Domain\Repository\ProcessRepository;
 use App\Domain\Repository\UnitRepository;
 use App\Domain\Service\PersonAllService;
 use App\Domain\Service\ProcessCreateService;
 use App\Domain\Service\ProcessDeleteService;
+use App\Domain\Service\ProcessIntegrationService;
 use App\Domain\Service\ProcessUpdateService;
 use App\Domain\Service\UnitAllService;
 
@@ -199,14 +199,10 @@ class ProcessController extends Controller
 	public function integrate()
 	{
 		try {
-			$processRepository = new ProcessRepository();
-			$process = $processRepository->find( $this->request->id );
-			$volk = new VolkLMSConnector( $process );
-
-			$process->line_position = $volk->handleProcess();
-			$process->integrated = true;
-
-			$processRepository->update( $process );
+			ProcessIntegrationService::execute(
+				$this->request->id,
+				new ProcessRepository()
+			);
 
 			Flash::set( 'successMessage', 'Integração realizada com sucesso' );
 
