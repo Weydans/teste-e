@@ -200,13 +200,13 @@ class ProcessController extends Controller
 	{
 		try {
 			$processRepository = new ProcessRepository();
-
-			/** @var Process */
 			$process = $processRepository->find( $this->request->id );
 			$volk = new VolkLMSConnector( $process );
 
 			$process->line_position = $volk->handleProcess();
 			$process->integrated = true;
+
+			$processRepository->update( $process );
 
 			Flash::set( 'successMessage', 'Integração realizada com sucesso' );
 

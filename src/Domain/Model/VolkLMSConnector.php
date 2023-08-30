@@ -6,8 +6,6 @@ use GuzzleHttp\Client;
 
 class VolkLMSConnector
 {
-	const BASE_URL = 'https://dev.evolke.com.br/admin/gabriel/evolke-admin/api/v2/';
-
 	private Process $process;
 	private string $token;
 	private object $HTTPClient;
@@ -16,7 +14,7 @@ class VolkLMSConnector
 	public function __construct( Process $process )
 	{
 		$this->process = $process;
-		$this->HTTPClient = new Client([ 'base_uri' => self::BASE_URL ]); 
+		$this->HTTPClient = new Client([ 'base_uri' => $_ENV['INTEGRATION_URL'] ]); 
 		$this->login();
 	}
 
@@ -28,8 +26,8 @@ class VolkLMSConnector
 			[
 				'query' => [
 					'action' => 'authToken',
-					'email'  => 'volklms@evolke.com.br',
-					'senha'  => 'volklmsdesafio',
+					'email'  => $_ENV['INTEGRATION_EMAIL'],
+					'senha'  => $_ENV['INTEGRATION_PASSWORD'],
 				],
 				'headers' => [
 					'Accept' => 'application/json',
@@ -69,13 +67,44 @@ class VolkLMSConnector
 
 	private function updateProcessQueue() : void
 	{
-
+		$response = $this->HTTPClient->request(
+			'GET', 
+			'router.php', 
+			[
+				'query' => [
+					'action'  => 'updateQueue',
+					'id_fila' => $this->process->line_position,
+					'status'  => $this->process->status,
+				],
+				'headers' => [
+					'Accept' => 'application/json',
+					'Content-Type' => 'application/json',
+					'Authorization' => 'Bearer ' . $this->token,
+				]
+			]
+		);
 	}
 
-	private function getProcessFromQueue() : string
+	private function getProcessFromQueue() : void
 	{
-		$response = '';
-		return $response;
+		$response = $this->HTTPClient->request(
+			'GET', 
+			'router.php', 
+			[
+				'query' => [
+					'action'  => 'getQueue',
+					'id_fila' => $this->process->line_position,
+				],
+				'headers' => [
+					'Accept' => 'application/json',
+					'Content-Type' => 'application/json',
+					'Authorization' => 'Bearer ' . $this->token,
+				]
+			]
+		);
+		
+		$arrResponse   = json_decode( $response->getBody(), true );
+		$this->queueId = $arrResponse['result']['data'][0]['id'];
 	}
 
 	public function handleProcess() : int
@@ -84,9 +113,8 @@ class VolkLMSConnector
 			$this->addProcessQueue();
 		} else { 
 			$this->updateProcessQueue();
+			$this->getProcessFromQueue();
 		}
-
-		$this->getProcessFromQueue();
 
 		return $this->queueId;
 	}
