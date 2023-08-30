@@ -58,8 +58,6 @@ make install
 
 ## Execução
 
-- Insira no arquivo `.env` as credenciais do seu banco de dados se estiver em ambiente de produção ou mantenha como está para ambiente de desenvolvimento
-
 - Suba a plicação com o comando abaixo
 ```bash
 make
