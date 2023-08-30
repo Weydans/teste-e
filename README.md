@@ -16,7 +16,7 @@ Sistema de teste para a Evolke
 - A pasta lib é um "micro-framework" que permite a criação de Rotas, Abstração de Controladores e Traits muito úteis no desenvolvimento.
 - O sistema está dockerizado sendo esperado o mesmo comportamento em outras máquinas.
 - A aplicação conta com variáveis de ambiente (.env) para facilitar o bootstrap do projeto e esconder secrets.
-- Todas as classes presentes na pasta src estão em PHP nativo requisitado.
+- Todas as classes presentes na pasta src estão em PHP nativo como requisitado.
 - SGBD MySQL como requisitado.
 - Biblioteca de front end Bootstrap (via CDN) como requisitado.
 - Foi utilizado o composer para gerenciar as dependências do projeto.
