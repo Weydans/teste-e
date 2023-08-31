@@ -13,6 +13,8 @@ use Doctrine\ORM\ORMSetup;
  */
 class EntityManagerFactory
 {
+	private static $EntityManager = null;
+
     /**
      * Create Doctrine EntityManager
      * 
@@ -20,6 +22,10 @@ class EntityManagerFactory
      */
 	public function create() : EntityManager
 	{
+		if ( !empty( self::$EntityManager ) ) {
+			return self::$EntityManager;
+		}
+
 		$config = ORMSetup::createAttributeMetadataConfiguration(
 			paths: array(__DIR__ . "/../../../Domain/Model/"),
 			isDevMode: true,
@@ -34,6 +40,8 @@ class EntityManagerFactory
 			'password' => $_ENV['DB_PASSWORD'],
 		], $config);
 
-		return new EntityManager($connection, $config);	
+		self::$EntityManager = new EntityManager($connection, $config);	
+
+		return self::$EntityManager;
 	}
 }

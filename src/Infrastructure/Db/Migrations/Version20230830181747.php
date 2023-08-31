@@ -27,7 +27,7 @@ final class Version20230830181747 extends AbstractMigration
         $this->addSql('ALTER TABLE Process ADD CONSTRAINT FK_49A0210AF8BD700D FOREIGN KEY (unit_id) REFERENCES Unit (id)');
 
         $this->addSql("insert into Person (name) values ('Ronaldo'), ('Ellen'), ('Scarlet'), ('Leonardo'), ('Fernanda'), ('Gabriela'), ('Renan'), ('Pedro'), ('Ana'), ('Ricardo'), ('Roberto');");
-        $this->addSql("insert into Unit (name) values ('Unidade Blumenau'), ('Unidade Navegantes'), ('Unidade Itajaí'), ('Unidade Rio de Janeiro'), ('Unidade São Paulo'), ('Unidade Florianópolis'), ('Unidade Curitiba'), ('Unidade Porto Alegr'), ('Unidade João Pessoa'), ('Unidade Brasília'), ('Unidade Boa Vista'), ('UnidadePorto Velho')");
+        $this->addSql("insert into Unit (name) values ('Unidade Blumenau'), ('Unidade Navegantes'), ('Unidade Itajaí'), ('Unidade Rio de Janeiro'), ('Unidade São Paulo'), ('Unidade Florianópolis'), ('Unidade Curitiba'), ('Unidade Porto Alegr'), ('Unidade João Pessoa'), ('Unidade Brasília'), ('Unidade Boa Vista'), ('Unidade Porto Velho'), ('Unidade Belo Horizonte')");
     }
 
     public function down(Schema $schema): void
