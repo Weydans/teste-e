@@ -2,6 +2,7 @@
 
 namespace App\Domain\Model;
 
+use App\Domain\Exception\VolkLMSConnectorException;
 use GuzzleHttp\Client;
 
 class VolkLMSConnector
@@ -20,22 +21,28 @@ class VolkLMSConnector
 
 	private function login() : void
 	{
-		$response = $this->HTTPClient->request(
-			'GET', 
-			'router.php', 
-			[
-				'query' => [
-					'action' => 'authToken',
-					'email'  => $_ENV['INTEGRATION_EMAIL'],
-					'senha'  => $_ENV['INTEGRATION_PASSWORD'],
-				],
-				'headers' => [
-					'Accept' => 'application/json',
-					'Content-Type' => 'application/json',
+		try {
+			$response = $this->HTTPClient->request(
+				'GET', 
+				'router.php', 
+				[
+					'query' => [
+						'action' => 'authToken',
+						'email'  => $_ENV['INTEGRATION_EMAIL'],
+						'senha'  => $_ENV['INTEGRATION_PASSWORD'],
+					],
+					'headers' => [
+						'Accept' => 'application/json',
+						'Content-Type' => 'application/json',
+					]
 				]
-			]
-		);
-		
+			);
+		} catch ( \Exception $e ) { 
+			throw new VolkLMSConnectorException( 
+				'Não foi possível autenticar com VolkLMS' 
+			);
+		}
+
 		$arrResponse = json_decode( $response->getBody(), true );
 		$this->token = $arrResponse['result']['access_token'];
 	}
@@ -60,6 +67,14 @@ class VolkLMSConnector
 				]
 			]
 		);
+
+		if ( $response->getStatusCode() != 200 
+			&& $response->getStatusCode() != 201 
+		) {
+			throw new VolkLMSConnectorException( 
+				'Não foi possível adicionar integração com VolkLMS' 
+			);
+		}
 		
 		$arrResponse = json_decode( $response->getBody(), true );
 		$this->queueId = $arrResponse['result']['id_fila'];
@@ -83,6 +98,12 @@ class VolkLMSConnector
 				]
 			]
 		);
+
+		if ( $response->getStatusCode() != 200 ) {
+			throw new VolkLMSConnectorException( 
+				'Erro ao atualizar integracao com VolkLMS' 
+			);
+		}
 	}
 
 	private function getProcessFromQueue() : void
@@ -102,6 +123,12 @@ class VolkLMSConnector
 				]
 			]
 		);
+
+		if ( $response->getStatusCode() != 200 ) {
+			throw new VolkLMSConnectorException( 
+				'Erro ao buscar integracao com VolkLMS' 
+			);
+		}
 		
 		$arrResponse   = json_decode( $response->getBody(), true );
 		$this->queueId = $arrResponse['result']['data'][0]['id'];

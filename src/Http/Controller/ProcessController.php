@@ -6,6 +6,7 @@ use Lib\Flash;
 use Lib\Controller;
 use App\Domain\Service\ProcessAllService;
 use App\Domain\Exception\RegisterNotFoundException;
+use App\Domain\Exception\VolkLMSConnectorException;
 use App\Domain\Model\Process;
 use App\Domain\Repository\PersonRepository;
 use App\Domain\Repository\ProcessRepository;
@@ -210,6 +211,11 @@ class ProcessController extends Controller
 		
 		} catch ( RegisterNotFoundException $e ) {
 			Flash::set( 'errorMessage', 'Registro não encontrado' );
+
+			return header("location: /{$this->request->id}");
+
+		} catch ( VolkLMSConnectorException $e ) {
+			Flash::set( 'errorMessage', $e->getMessage() );
 
 			return header("location: /{$this->request->id}");
 		
