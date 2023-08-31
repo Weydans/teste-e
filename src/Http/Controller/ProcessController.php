@@ -142,7 +142,9 @@ class ProcessController extends Controller
 					'Todos os campos são de preenchimento obrigatório'
 				);
 
-				return header("location: /$this->request->id");
+				$id = $this->request->id;
+
+				return header("location: /$id");
 			}
 
 			ProcessUpdateService::execute( 

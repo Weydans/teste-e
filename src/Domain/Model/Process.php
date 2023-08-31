@@ -35,10 +35,10 @@ class Process implements SerializeableInterface
 	#[Column]
 	private int $id;
 	
-	#[ManyToOne(targetEntity: Person::class, inversedBy: 'processes', cascade: ['persist', 'remove'])]
+	#[ManyToOne(targetEntity: Person::class, inversedBy: 'processes', cascade: ['persist'])]
 	private Person $person;
 	
-	#[ManyToOne(targetEntity: Unit::class, inversedBy: 'processes', cascade: ['persist', 'remove'])]
+	#[ManyToOne(targetEntity: Unit::class, inversedBy: 'processes', cascade: ['persist'])]
 	private Unit $unit;
 	
 	#[Column]
