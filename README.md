@@ -1,6 +1,6 @@
-# Teste Evolke
+# Teste E
 
-Sistema de teste para a Evolke
+Sistema de teste para a E
 
 
 
@@ -42,12 +42,12 @@ Clique nos links acima para acessar a página de instalação de cada um.
 
 - Clone o projeto
 ```bash
-git clone https://github.com/Weydans/teste-evolke.git
+git clone https://github.com/Weydans/teste-e.git
 ```
 
 - Acesse a pasta do projeto
 ```bash
-cd teste-evolke
+cd teste-e
 ```
 
 - Rode o comando de instalação dos containers
